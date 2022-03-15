@@ -1,4 +1,4 @@
-package com.example.emlakburada.model;
+package com.example.emlakburada.model.models;
 
 import com.example.emlakburada.model.enums.AdvertType;
 import lombok.AllArgsConstructor;

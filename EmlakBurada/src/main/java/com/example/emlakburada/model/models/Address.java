@@ -1,28 +1,25 @@
-package com.example.emlakburada.model;
+package com.example.emlakburada.model.models;
 
+import com.example.emlakburada.model.enums.CountryType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "advert_product_package")
+@Table(name = "address")
 @Entity
-public class AdvertProductPackage {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false)
     private Long id;
-    @OneToMany
-    @JoinColumn(name = "advert_ID")
-    private Set<Advert> advert;
-    private Date packageExpirationDate;
-
+    private CountryType country;
+    private String district;
+    private String fullAddress;
 
 }

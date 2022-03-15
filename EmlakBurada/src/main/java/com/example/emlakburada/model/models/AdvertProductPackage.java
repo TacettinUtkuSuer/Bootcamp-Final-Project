@@ -1,25 +1,28 @@
-package com.example.emlakburada.model;
+package com.example.emlakburada.model.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "credit_card")
+@Table(name = "advert_product_package")
 @Entity
-public class CreditCard {
+public class AdvertProductPackage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false)
     private Long id;
-    private String nameOnCreditCard;
-    private String creditCardNumber;
-    private String shortFormatExpirationYear;
-    private int CVVnumber;
+    @OneToMany
+    @JoinColumn(name = "advert_ID")
+    private Set<Advert> advert;
+    private Date packageExpirationDate;
+
 
 }

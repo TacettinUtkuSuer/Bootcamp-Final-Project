@@ -1,6 +1,5 @@
-package com.example.emlakburada.model;
+package com.example.emlakburada.model.models;
 
-import com.example.emlakburada.model.enums.CountryType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,16 +9,17 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "address")
+@Table(name = "credit_card")
 @Entity
-public class Address {
+public class CreditCard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false)
     private Long id;
-    private CountryType country;
-    private String district;
-    private String fullAddress;
+    private String nameOnCreditCard;
+    private String creditCardNumber;
+    private String shortFormatExpirationYear;
+    private int CVVnumber;
 
 }
