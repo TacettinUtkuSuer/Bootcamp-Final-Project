@@ -19,7 +19,7 @@ public class AdvertProductPackage {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false)
     private Long id;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "advert_ID")
     private Set<Advert> advert;
     private Date packageExpirationDate;

@@ -23,12 +23,14 @@ public class User {
     private String surname;
     private String email;
     private String password;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "advert_product_package_ID")
     private Set<AdvertProductPackage> advertProductPackage;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "credit_card_ID")
     private CreditCard creditCard;
 
-
+    public User(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
 }
