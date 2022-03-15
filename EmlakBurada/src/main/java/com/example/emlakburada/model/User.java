@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -22,11 +23,12 @@ public class User {
     private String surname;
     private String email;
     private String password;
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "advert_product_package_ID")
-    private AdvertProductPackage advertProductPackage;
-    @ManyToOne
+    private Set<AdvertProductPackage> advertProductPackage;
+    @OneToOne
     @JoinColumn(name = "credit_card_ID")
     private CreditCard creditCard;
+
 
 }

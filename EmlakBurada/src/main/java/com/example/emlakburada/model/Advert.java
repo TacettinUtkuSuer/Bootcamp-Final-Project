@@ -19,7 +19,7 @@ public class Advert {
     @Column(name = "ID", nullable = false)
     private Long id;
     private AdvertType advertType;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "address_ID")
     private Address address;
     private String title;

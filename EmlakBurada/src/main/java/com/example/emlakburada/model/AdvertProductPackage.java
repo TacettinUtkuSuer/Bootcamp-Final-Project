@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -18,9 +19,9 @@ public class AdvertProductPackage {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false)
     private Long id;
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "advert_ID")
-    private Advert advert;
+    private Set<Advert> advert;
     private Date packageExpirationDate;
 
 
