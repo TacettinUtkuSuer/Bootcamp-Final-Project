@@ -1,11 +1,13 @@
 package com.example.emlakburada.queue;
 
 import com.example.emlakburada.config.RabbitMqConfig;
-import emlakburada.config.RabbitMqConfig;
-import emlakburada.service.EmailMessage;
+import com.example.emlakburada.model.models.CreditCard;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class RabbitMqService implements QueueService {
@@ -17,9 +19,10 @@ public class RabbitMqService implements QueueService {
 	private RabbitMqConfig config;
 
 	@Override
-	public void sendMessage(EmailMessage message) {
-		rabbitTemplate.convertAndSend(config.getExchange(), config.getRoutingkey(), message);
-
+	public void sendPayment(CreditCard creditCard, String price) {
+		Map<CreditCard,String> data = new HashMap();
+		data.put(creditCard,price);
+		rabbitTemplate.convertAndSend(config.getExchange(), config.getRoutingkey(), data);
 	}
 
 }

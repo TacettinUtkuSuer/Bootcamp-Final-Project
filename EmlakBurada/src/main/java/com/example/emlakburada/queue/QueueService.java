@@ -4,6 +4,6 @@ import com.example.emlakburada.model.models.CreditCard;
 
 public interface QueueService {
 	
-	void sendMessage(CreditCard creditCard, );
+	void sendPayment(CreditCard creditCard, String price);
 
 }
