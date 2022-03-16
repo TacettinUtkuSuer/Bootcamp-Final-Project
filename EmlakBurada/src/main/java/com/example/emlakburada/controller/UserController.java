@@ -2,7 +2,6 @@ package com.example.emlakburada.controller;
 
 import com.example.emlakburada.model.models.CreditCard;
 import com.example.emlakburada.model.models.User;
-import com.example.emlakburada.repository.CreditCardRepository;
 import com.example.emlakburada.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +15,6 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private CreditCardRepository creditCardRepository;
 
     @GetMapping(value = "/hello")
     public ResponseEntity<String> save(){
