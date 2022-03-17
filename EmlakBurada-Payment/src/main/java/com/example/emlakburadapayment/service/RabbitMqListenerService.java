@@ -1,6 +1,5 @@
 package com.example.emlakburadapayment.service;
 
-import com.example.emlakburadapayment.model.CreditCard;
 import com.example.emlakburadapayment.model.PaymentMessage;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RabbitMqListenerService {
 
+
     @Autowired
     private PaymentService paymentService;
 
@@ -21,5 +21,7 @@ public class RabbitMqListenerService {
         paymentService.pay(paymentMessage.getCreditCardId(), paymentMessage.getPrice());
         log.info("RabbitMQ message has been taken.");
     }
+
+
 
 }

@@ -1,16 +1,37 @@
 package com.example.emlakburadapayment.service;
 
+import com.example.emlakburadapayment.bankService.AtBankPaymentService;
 import com.example.emlakburadapayment.model.CreditCard;
+import com.example.emlakburadapayment.repository.CreditCardRepository;
+import com.example.emlakburadapayment.repository.PaymentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
-public class PaymentService {
+public class PaymentService extends PaymentBaseService{
 
+    @Autowired
+    private CreditCardRepository creditCardRepository;
 
+    @Autowired
+    private PaymentRepository paymentRepository;
 
-    public boolean pay(CreditCard creditCard, String price){
+    @Autowired
+    private AtBankPaymentService atBankPaymentService;
 
-        return true;
+    public boolean pay(long creditCardId, BigDecimal price){
+
+        CreditCard creditCard = creditCardRepository.findById(creditCardId);
+
+        boolean paymentStatus = atBankPaymentService.makePayment(creditCard, price);
+        if( paymentStatus ){
+            paymentRepository.save(convertFromCreditCardAndPriceToPaymentInfo(creditCard, price));
+            return true;
+        }
+
+        return false;
     }
 
 }
