@@ -7,6 +7,8 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class RabbitMqService implements QueueService {
 
@@ -17,7 +19,7 @@ public class RabbitMqService implements QueueService {
 	private RabbitMqConfig config;
 
 	@Override
-	public void sendPayment(long creditCardId, String price) {
+	public void sendPayment(long creditCardId, BigDecimal price) {
 		PaymentMessage paymentMessage = new PaymentMessage(creditCardId, price);
 		rabbitTemplate.convertAndSend(config.getExchange(), config.getRoutingkey(), paymentMessage);
 	}

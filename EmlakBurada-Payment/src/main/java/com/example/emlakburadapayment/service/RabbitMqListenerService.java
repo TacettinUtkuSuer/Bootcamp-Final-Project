@@ -1,6 +1,8 @@
 package com.example.emlakburadapayment.service;
 
 import com.example.emlakburadapayment.model.PaymentMessage;
+import com.rabbitmq.client.PossibleAuthenticationFailureException;
+import com.rabbitmq.client.ShutdownSignalException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessagingException;
@@ -16,12 +18,12 @@ public class RabbitMqListenerService {
     @Autowired
     private PaymentService paymentService;
 
+
     @RabbitListener(queues = "${emlakburada.rabbitmq.queue}")
-    public void receiveMessage(PaymentMessage paymentMessage) throws MessagingException {
-        paymentService.pay(paymentMessage.getCreditCardId(), paymentMessage.getPrice());
-        log.info("RabbitMQ message has been taken.");
+    public void receiveMessage(PaymentMessage paymentMessage) throws MessagingException{
+
+            paymentService.pay(paymentMessage.getCreditCardId(), paymentMessage.getPrice());
+            log.info("RabbitMQ message has been taken.");
     }
-
-
 
 }
