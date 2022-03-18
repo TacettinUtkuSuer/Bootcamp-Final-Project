@@ -1,14 +1,11 @@
-package com.example.emlakburadapayment.service;
+package com.example.emlakburadaadvertactivation.service;
 
 import com.example.emlakburadapayment.model.PaymentMessage;
-import com.rabbitmq.client.PossibleAuthenticationFailureException;
-import com.rabbitmq.client.ShutdownSignalException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessagingException;
 import org.springframework.stereotype.Service;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
