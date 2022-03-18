@@ -1,4 +1,4 @@
-package com.example.emlakburadapayment.config;
+package com.example.emlakburada.config;
 
 import lombok.Data;
 import org.springframework.amqp.core.*;

@@ -1,25 +1,26 @@
 package com.example.emlakburada.controller;
 
 import com.example.emlakburada.model.models.CreditCard;
+import com.example.emlakburada.model.models.PaymentMessage;
 import com.example.emlakburada.model.models.User;
 import com.example.emlakburada.queue.RabbitMqService;
 import com.example.emlakburada.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 
+@Slf4j
 @Controller
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    RabbitMqService rabbitMqService;
 
     @GetMapping(value = "/hello")
     public ResponseEntity<String> save(){
@@ -34,7 +35,15 @@ public class UserController {
 
         userRepository.save(user2);
 
-        rabbitMqService.sendPayment(user2.getCreditCard().getId(), new BigDecimal("300"));
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:9091/payandsavepayment";
+        PaymentMessage paymentMessage = new PaymentMessage(user2.getCreditCard().getId(), new BigDecimal("400"));
+        ResponseEntity<Boolean> responseEntity = restTemplate.postForEntity(url,paymentMessage,Boolean.class);
+        if (responseEntity.getBody()){
+            log.info("The payment is successful.");
+        } else {
+            log.warn("There was a problem with the payment.");
+        }
 
         return new ResponseEntity<>("Hello", HttpStatus.OK);
     }
