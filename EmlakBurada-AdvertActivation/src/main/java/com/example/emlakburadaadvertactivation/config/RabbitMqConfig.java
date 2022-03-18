@@ -1,4 +1,4 @@
-RabbitMqListenerServicepackage com.example.emlakburadaadvertactivation.config;
+package com.example.emlakburadaadvertactivation.config;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;

@@ -5,12 +5,14 @@ import com.example.emlakburada.model.models.PaymentMessage;
 import com.example.emlakburada.model.models.User;
 import com.example.emlakburada.queue.RabbitMqService;
 import com.example.emlakburada.repository.UserRepository;
+import com.example.emlakburada.service.PrepareDatabaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -46,6 +48,17 @@ public class UserController {
         }
 
         return new ResponseEntity<>("Hello", HttpStatus.OK);
+    }
+
+    @Autowired
+    PrepareDatabaseService prepareDatabaseService;
+
+    @PostMapping(value = "/prepare")
+    public ResponseEntity<HttpStatus> prepare(){
+
+        prepareDatabaseService.prepareDatabase();
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

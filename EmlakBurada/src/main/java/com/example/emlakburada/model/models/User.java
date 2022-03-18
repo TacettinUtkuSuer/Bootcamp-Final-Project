@@ -1,11 +1,10 @@
 package com.example.emlakburada.model.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -23,14 +22,11 @@ public class User {
     private String surname;
     private String email;
     private String password;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "advert_product_package_ID")
-    private Set<AdvertProductPackage> advertProductPackage;
+    private AdvertProductPackage advertProductPackage;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "credit_card_ID")
     private CreditCard creditCard;
 
-    public User(CreditCard creditCard) {
-        this.creditCard = creditCard;
-    }
 }
