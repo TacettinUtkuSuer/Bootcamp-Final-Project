@@ -20,7 +20,7 @@ public class JwtUtil {
 
 	private static final String SECRET_KEY = "emlakburada-secret-key-rfgd234ffr5";
 
-	private static final long EXPIRATION_TIME = 300_000;
+	private static final long EXPIRATION_TIME = 300_000_000;
 
 	private Key key;
 

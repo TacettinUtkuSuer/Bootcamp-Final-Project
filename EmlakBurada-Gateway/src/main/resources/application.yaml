@@ -19,7 +19,7 @@ spring:
         - id: emlakburada
           uri: http://localhost:9091
           predicates:
-            - Path=/hello/**, /users/**, /gettoken/**
+            - Path=/hello/**, /users/**, /gettoken/**, /adverts/**, /prepare/**
         - id: emlakburada-payment
           uri: http://localhost:9092
           predicates:
