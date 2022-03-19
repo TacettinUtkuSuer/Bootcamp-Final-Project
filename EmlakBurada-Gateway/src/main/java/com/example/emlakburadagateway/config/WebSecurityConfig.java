@@ -39,17 +39,22 @@ public class WebSecurityConfig{
 
                 .route("auth",
                         r -> r.path("/auth/**")
-                                .uri("http://localhost:9093"))
+                                .uri("http://localhost:9094"))
                 .route("emlakburada",
                         r -> r.method(HttpMethod.POST)
                                 .and()
                                 .path(("/adverts/**"))
-                                .filters(f -> f.filter(filter)).uri("http://localhost:9090"))
+                                .filters(f -> f.filter(filter)).uri("http://localhost:9091"))
                 .route("emlakburada",
                         r -> r.method(HttpMethod.GET)
                                 .and()
                                 .path("/hello/**")
-                                .filters(f -> f.filter(filter)).uri("http://localhost:9090"))
+                                .filters(f -> f.filter(filter)).uri("http://localhost:9091"))
+                .route("emlakburada",
+                        r -> r.method(HttpMethod.GET)
+                                .and()
+                                .path("/gettoken/**")
+                                .filters(f -> f.filter(filter)).uri("http://localhost:9091"))
                 .route("emlakburada-banner",
                         r -> r.path("/banners/**")
                                 .filters(f -> f.filter(filter)).uri("http://localhost:8081"))

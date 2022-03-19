@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PaymentController {
 
-   /* @Autowired
+    /*
+    @Autowired
     PaymentService paymentService;
 
-    @GetMapping(value = "/pay")
-    public ResponseEntity<Boolean> pays(){
+    // Buying advert product.
+    @GetMapping(value = "/payment")
+    public ResponseEntity<Boolean> buyProduct(){
         return new ResponseEntity<>(paymentService.pay(),HttpStatus.OK);
-    }*/
+     */
 }

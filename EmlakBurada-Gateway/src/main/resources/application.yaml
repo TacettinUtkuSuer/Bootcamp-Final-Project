@@ -1,5 +1,9 @@
+#-General Properties----------------------------------------------------------------------------------------------------
+
 server:
-  port: 9089
+  port: 9090
+
+#-Gateway Settings------------------------------------------------------------------------------------------------------
 
 spring:
   application:
@@ -13,24 +17,26 @@ spring:
     gateway:
       routes:
         - id: emlakburada
-          uri: http://localhost:9090
-          predicates:
-            - Path=/hello/**, /users/**
-        - id: emlakburada-payment
           uri: http://localhost:9091
+          predicates:
+            - Path=/hello/**, /users/**, /gettoken/**
+        - id: emlakburada-payment
+          uri: http://localhost:9092
           predicates:
             - Path=/banners/**
             - Method=POST,GET
         - id: emlakburada-advertactivation
-          uri: http://localhost:9092
+          uri: http://localhost:9093
           predicates:
             - Path=/asd/**
             - Method=POST
         - id: emlakburada-auth
-          uri: http://localhost:9093
+          uri: http://localhost:9094
           predicates:
             - Path=/auth/**
             - Method=POST
+
+#-Other Properties------------------------------------------------------------------------------------------------------
 
   main:
     allow-bean-definition-overriding: true

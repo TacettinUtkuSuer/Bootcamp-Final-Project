@@ -69,6 +69,7 @@ public class JwtUtil {
 				.setHeader(header)
 				.setClaims(claims)
 				.setIssuedAt(new Date(now))
+				.setSubject(user.getEmail())
 				.setIssuer("emlakburada.com")
 				.setExpiration( new Date(now + EXPIRATION_TIME))
 				.signWith(key, SignatureAlgorithm.HS256)

@@ -69,17 +69,16 @@ public class JwtFilter implements GatewayFilter {
             return response.setComplete();
         }
 
-//		if (jwtUtil.isTokenExpired(token)) {
-//			log.info("Token is expired: " + token);
-//			response.setStatusCode(HttpStatus.UNAUTHORIZED);
-//			return response.setComplete();
-//		}
+		if (jwtUtil.isTokenExpired(token)) {
+			log.info("Token is expired: " + token);
+			response.setStatusCode(HttpStatus.UNAUTHORIZED);
+			return response.setComplete();
+		}
 
         log.info("token is valid");
 
         Claims claims = jwtUtil.getAllClaimsFromToken(token);
         exchange.getRequest().mutate().header("id", String.valueOf(claims.get("id"))).build();
-
         return chain.filter(exchange);
     }
 
