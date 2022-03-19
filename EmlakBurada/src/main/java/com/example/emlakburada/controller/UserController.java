@@ -56,7 +56,10 @@ public class UserController {
     @PostMapping(value = "/prepare")
     public ResponseEntity<HttpStatus> prepare(){
 
-        prepareDatabaseService.prepareDatabase();
+        prepareDatabaseService.prepareDatabase01();
+        prepareDatabaseService.prepareDatabase02();
+        prepareDatabaseService.prepareDatabase03();
+        prepareDatabaseService.prepareDatabaseInfo();
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

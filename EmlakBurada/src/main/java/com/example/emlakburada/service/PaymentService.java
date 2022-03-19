@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PaymentService {
 
-    @Autowired
+  /*  @Autowired
     InfoRepository infoRepository;
 
     public boolean pay(){
@@ -19,5 +19,5 @@ public class PaymentService {
         }
         System.out.println(priceInfo.getValue());
         return true;
-    }
+    }*/
 }
