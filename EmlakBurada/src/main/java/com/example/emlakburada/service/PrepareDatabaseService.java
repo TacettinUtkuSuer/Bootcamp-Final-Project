@@ -4,8 +4,6 @@ import com.example.emlakburada.model.enums.AdvertStatus;
 import com.example.emlakburada.model.enums.AdvertType;
 import com.example.emlakburada.model.enums.CountryType;
 import com.example.emlakburada.model.models.*;
-import com.example.emlakburada.repository.AddressRepository;
-import com.example.emlakburada.repository.AdvertRepository;
 import com.example.emlakburada.repository.InfoRepository;
 import com.example.emlakburada.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
