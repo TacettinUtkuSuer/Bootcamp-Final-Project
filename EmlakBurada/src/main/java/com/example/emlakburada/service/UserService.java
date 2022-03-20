@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Slf4j
 @Service
@@ -22,6 +23,7 @@ public class UserService {
 
     @Autowired
     InfoRepository infoRepository;
+
 
     public String pay(long userId){
 
@@ -35,6 +37,15 @@ public class UserService {
 
         String message;
         if (responseEntity.getBody()){
+            LocalDate localDate = user.getAdvertProductPackage().getPackageExpirationDate();
+
+            if(localDate.isAfter(LocalDate.now())){
+                user.getAdvertProductPackage().setPackageExpirationDate(user.getAdvertProductPackage().getPackageExpirationDate().plusDays(30));
+            } else {
+                user.getAdvertProductPackage().setPackageExpirationDate(LocalDate.now().plusDays(30));
+            }
+
+            userRepository.save(user);
             message = "The payment is successful.";
             log.info(message);
         } else {

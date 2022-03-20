@@ -13,6 +13,7 @@ import com.example.emlakburada.service.baseServices.AdvertBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,9 @@ public class AdvertService extends AdvertBaseService {
 
     public String create(long userId, AdvertRequest advertRequest) {
         User user = userRepository.getById(userId);
+        if(user.getAdvertProductPackage().getPackageExpirationDate().isBefore(LocalDate.now())){
+            return new String("Your advert package has expired. Please buy new package.");
+        }
         List<Advert> advertList = user.getAdvertProductPackage().getAdverts();
         if(advertList.size()>10){
             return new String("You can create a maximum of 10 ads. therefore the record could not be created.");
@@ -67,6 +71,10 @@ public class AdvertService extends AdvertBaseService {
 
 
     public AdvertResponse updateById(long userId, long advertId, AdvertRequest advertRequest) {
+
+        if(userRepository.getById(userId).getAdvertProductPackage().getPackageExpirationDate().isBefore(LocalDate.now())){
+            return null;
+        }
 
         long userIdFromAdvertId = advertRepository.getById(advertId).getAdvertProductPackage().getUser().getId();
 
