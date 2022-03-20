@@ -1,11 +1,14 @@
 package com.example.emlakburada.controller;
 
+import com.example.emlakburada.dto.request.AdvertRequest;
 import com.example.emlakburada.model.models.CreditCard;
 import com.example.emlakburada.model.models.PaymentMessage;
 import com.example.emlakburada.model.models.User;
 import com.example.emlakburada.queue.RabbitMqService;
 import com.example.emlakburada.repository.UserRepository;
 import com.example.emlakburada.service.PrepareDatabaseService;
+import com.example.emlakburada.service.TokenService;
+import com.example.emlakburada.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -22,32 +27,18 @@ import java.math.BigDecimal;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    UserService userService;
 
-    @GetMapping(value = "/hello")
-    public ResponseEntity<String> save(){
+    @Autowired
+    TokenService tokenService;
 
-        User user = new User();
-        userRepository.save(user);
+    @GetMapping(value = "/pay")
+    public ResponseEntity<String> pay(@RequestHeader(value="Authorization") String token){
+        long userId = tokenService.getUserIdByToken(token);
 
-        User user2 = userRepository.getById(user.getId());
+        String message = userService.pay(userId);
 
-        CreditCard creditCard = new CreditCard("Tacettin Utku","1234 5678","24",111, user2);
-        user2.setCreditCard(creditCard);
-
-        userRepository.save(user2);
-
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:9091/payandsavepayment";
-        PaymentMessage paymentMessage = new PaymentMessage(user2.getCreditCard().getId(), new BigDecimal("400"));
-        ResponseEntity<Boolean> responseEntity = restTemplate.postForEntity(url,paymentMessage,Boolean.class);
-        if (responseEntity.getBody()){
-            log.info("The payment is successful.");
-        } else {
-            log.warn("There was a problem with the payment.");
-        }
-
-        return new ResponseEntity<>("Hello", HttpStatus.OK);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @Autowired

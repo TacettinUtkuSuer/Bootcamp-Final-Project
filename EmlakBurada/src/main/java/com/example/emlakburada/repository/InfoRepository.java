@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InfoRepository extends JpaRepository<Info, Long> {
 
-    //Info findByKey(String key);
+    Info findByKey(String key);
 
 }
