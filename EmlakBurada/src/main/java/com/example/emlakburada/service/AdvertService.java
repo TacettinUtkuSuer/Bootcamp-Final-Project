@@ -1,10 +1,12 @@
 package com.example.emlakburada.service;
 
+import com.example.emlakburada.dto.request.AdvertRabbitMQRequest;
 import com.example.emlakburada.dto.request.AdvertRequest;
 import com.example.emlakburada.dto.response.AdvertResponse;
 import com.example.emlakburada.model.enums.AdvertStatus;
 import com.example.emlakburada.model.models.Advert;
 import com.example.emlakburada.model.models.User;
+import com.example.emlakburada.queue.RabbitMqService;
 import com.example.emlakburada.repository.AdvertRepository;
 import com.example.emlakburada.repository.UserRepository;
 import com.example.emlakburada.service.baseServices.AdvertBaseService;
@@ -23,6 +25,9 @@ public class AdvertService extends AdvertBaseService {
     @Autowired
     AdvertRepository advertRepository;
 
+    @Autowired
+    RabbitMqService rabbitMqService;
+
     public String create(long userId, AdvertRequest advertRequest) {
         User user = userRepository.getById(userId);
         List<Advert> advertList = user.getAdvertProductPackage().getAdverts();
@@ -35,10 +40,8 @@ public class AdvertService extends AdvertBaseService {
         user.getAdvertProductPackage().setAdverts(advertList);
         userRepository.save(user);
 
-
-        // BURAYA ASENKRON YAPI KOYULACAK
-
-
+        AdvertRabbitMQRequest advertRabbitMQRequest = new AdvertRabbitMQRequest(user.getAdvertProductPackage().getAdverts().get(advertList.size()-1).getId());
+        rabbitMqService.sendMessageAndAdvertActivate(advertRabbitMQRequest);
 
         return new String("Advert has been created.");
     }
@@ -80,13 +83,10 @@ public class AdvertService extends AdvertBaseService {
             User user = userRepository.getById(userId);
             user.getAdvertProductPackage().setAdverts(advertList);
 
-
             userRepository.save(user);
 
-
-            // BURAYA ASENKRON YAPI KOYULACAK
-
-
+            AdvertRabbitMQRequest advertRabbitMQRequest = new AdvertRabbitMQRequest(advertId);
+            rabbitMqService.sendMessageAndAdvertActivate(advertRabbitMQRequest);
 
             return convertFromAdvertToAdvertResponse(advert);
         }

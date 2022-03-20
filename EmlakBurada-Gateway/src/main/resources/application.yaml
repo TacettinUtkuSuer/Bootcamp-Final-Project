@@ -12,14 +12,14 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://localhost:9093/auth
+          jwk-set-uri: http://localhost:9094/auth
   cloud:
     gateway:
       routes:
         - id: emlakburada
           uri: http://localhost:9091
           predicates:
-            - Path=/hello/**, /users/**, /gettoken/**, /adverts/**, /prepare/**
+            - Path=/pay/**, /adverts/**, /prepare/**
         - id: emlakburada-payment
           uri: http://localhost:9092
           predicates:
@@ -28,7 +28,7 @@ spring:
         - id: emlakburada-advertactivation
           uri: http://localhost:9093
           predicates:
-            - Path=/asd/**
+            - Path=/adverts/**
             - Method=POST
         - id: emlakburada-auth
           uri: http://localhost:9094

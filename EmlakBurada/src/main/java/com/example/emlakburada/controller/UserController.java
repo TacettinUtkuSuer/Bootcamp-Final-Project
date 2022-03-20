@@ -32,7 +32,7 @@ public class UserController {
     @Autowired
     TokenService tokenService;
 
-    @GetMapping(value = "/pay")
+    @PostMapping(value = "/pay")
     public ResponseEntity<String> pay(@RequestHeader(value="Authorization") String token){
         long userId = tokenService.getUserIdByToken(token);
 

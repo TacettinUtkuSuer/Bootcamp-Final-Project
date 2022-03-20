@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class StatusService {
@@ -26,15 +28,21 @@ public class StatusService {
     }
 
     public boolean advertPublicate(long advertId){
-
         try {
 
-            Advert advert = advertRepository.findAdvertbyId(advertId);
-            advert.setAdvertStatus(AdvertStatus.ACTIVE);
+            Optional<Advert> advertOpt =  advertRepository.findById(advertId);
 
-            advertRepository.save(advert);
+            if(advertOpt.isPresent()){
 
-            return true;
+                Advert advert = advertOpt.get();
+                advert.setAdvertStatus(AdvertStatus.ACTIVE);
+                advertRepository.save(advert);
+                log.info("Saved");
+                return true;
+
+            } else {
+                return false;
+            }
 
         } catch(Exception e) {
             log.warn(e.getMessage());

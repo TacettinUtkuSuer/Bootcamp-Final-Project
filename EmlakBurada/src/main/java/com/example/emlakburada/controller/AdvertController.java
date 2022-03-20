@@ -1,7 +1,9 @@
 package com.example.emlakburada.controller;
 
+import com.example.emlakburada.dto.request.AdvertRabbitMQRequest;
 import com.example.emlakburada.dto.request.AdvertRequest;
 import com.example.emlakburada.dto.response.AdvertResponse;
+import com.example.emlakburada.queue.RabbitMqService;
 import com.example.emlakburada.service.AdvertService;
 import com.example.emlakburada.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,10 @@ public class AdvertController {
 
     @Autowired
     TokenService tokenService;
+
+    @Autowired
+    RabbitMqService rabbitMqService;
+
 
     @PostMapping(value = "/adverts/create")
     public ResponseEntity<String> create(@RequestBody AdvertRequest advertRequest, @RequestHeader(value="Authorization") String token){

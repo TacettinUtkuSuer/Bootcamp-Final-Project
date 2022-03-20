@@ -1,13 +1,10 @@
 package com.example.emlakburada.queue;
 
 import com.example.emlakburada.config.RabbitMqConfig;
-import com.example.emlakburada.model.models.CreditCard;
-import com.example.emlakburada.model.models.PaymentMessage;
+import com.example.emlakburada.dto.request.AdvertRabbitMQRequest;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 
 @Service
 public class RabbitMqService implements QueueService {
@@ -19,9 +16,8 @@ public class RabbitMqService implements QueueService {
 	private RabbitMqConfig config;
 
 	@Override
-	public void sendPayment(long creditCardId, BigDecimal price) {
-		PaymentMessage paymentMessage = new PaymentMessage(creditCardId, price);
-		rabbitTemplate.convertAndSend(config.getExchange(), config.getRoutingkey(), paymentMessage);
+	public void sendMessageAndAdvertActivate(AdvertRabbitMQRequest advertIdRequest) {
+		rabbitTemplate.convertAndSend(config.getExchange(), config.getRoutingkey(), advertIdRequest);
 	}
 
 }
