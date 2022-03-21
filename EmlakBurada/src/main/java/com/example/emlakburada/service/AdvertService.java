@@ -65,26 +65,47 @@ public class AdvertService extends AdvertBaseService {
 
     public List<AdvertResponse> readAll(long userId) {
 
+        String message;
+
         List<Advert> advertList = userRepository.getById(userId).getAdvertProductPackage().getAdverts();
+
+        if(advertList==null){
+            message = "Reading unsuccessful";
+            log.warn(message);
+            return null;
+        }
+
         List<AdvertResponse> advertResponseList = convertFromAdvertListToAdvertResponseList(advertList);
 
+        message = "Reading successful.";
+        log.info(message);
         return advertResponseList;
     }
 
 
     public AdvertResponse readById(long userId, long advertId) {
 
+        String message;
+
         Advert advert = advertRepository.getById(advertId);
         if(advert.getAdvertProductPackage().getUser().getId() == userId){
+            message = "Reading successful.";
+            log.info(message);
             return convertFromAdvertToAdvertResponse(advert);
         }
+        message = "Reading unsuccessful";
+        log.warn(message);
         return null;
     }
 
 
     public AdvertResponse updateById(long userId, long advertId, AdvertRequest advertRequest) {
 
+        String message;
+
         if(userRepository.getById(userId).getAdvertProductPackage().getPackageExpirationDate().isBefore(LocalDate.now())){
+            message = "The product package has expired.";
+            log.warn(message);
             return null;
         }
 
@@ -108,9 +129,13 @@ public class AdvertService extends AdvertBaseService {
             AdvertRabbitMQRequest advertRabbitMQRequest = new AdvertRabbitMQRequest(advertId);
             rabbitMqService.sendMessageAndAdvertActivate(advertRabbitMQRequest);
 
+            message = "Advert has been updated.";
+            log.info(message);
             return convertFromAdvertToAdvertResponse(advert);
         }
 
+        message = "Advert could not be updated.";
+        log.warn("message");
         return null;
     }
 
@@ -144,6 +169,8 @@ public class AdvertService extends AdvertBaseService {
 
     public AdvertResponse activate(long userId, long advertId) {
 
+        String message;
+
         long userIdFromAdvertId = advertRepository.getById(advertId).getAdvertProductPackage().getUser().getId();
 
         if(userIdFromAdvertId == userId){
@@ -160,13 +187,18 @@ public class AdvertService extends AdvertBaseService {
 
             userRepository.save(user);
 
+            message = "Advert has been activated.";
+            log.info(message);
             return convertFromAdvertToAdvertResponse(advert);
         }
-
+        message = "Advert could not been activated.";
+        log.warn(message);
         return null;
     }
 
     public AdvertResponse deactivate(long userId, long advertId) {
+
+        String message;
 
         long userIdFromAdvertId = advertRepository.getById(advertId).getAdvertProductPackage().getUser().getId();
 
@@ -184,16 +216,28 @@ public class AdvertService extends AdvertBaseService {
 
             userRepository.save(user);
 
+            message = "Advert has been deactivated.";
+            log.info(message);
             return convertFromAdvertToAdvertResponse(advert);
         }
 
+        message = "Advert could not been deactivated.";
+        log.warn(message);
         return null;
     }
 
 
     public List<AdvertResponse> readAllActive(long userId) {
 
+        String message;
+
         List<AdvertResponse> advertResponseList = readAll(userId);
+
+        if (advertResponseList==null) {
+            message = "Reading unsuccessful";
+            log.warn(message);
+            return null;
+        }
 
         List<AdvertResponse> advertResponseActiveList = new ArrayList<>();
 
@@ -203,12 +247,22 @@ public class AdvertService extends AdvertBaseService {
             }
         }
 
+        message = "Reading successful";
+        log.info(message);
         return advertResponseActiveList;
     }
 
     public List<AdvertResponse> readAllPassive(long userId) {
 
+        String message;
+
         List<AdvertResponse> advertResponseList = readAll(userId);
+
+        if (advertResponseList==null) {
+            message = "Reading unsuccessful";
+            log.warn(message);
+            return null;
+        }
 
         List<AdvertResponse> advertResponsePassiveList = new ArrayList<>();
 
@@ -218,12 +272,22 @@ public class AdvertService extends AdvertBaseService {
             }
         }
 
+        message = "Reading successful";
+        log.info(message);
         return advertResponsePassiveList;
     }
 
     public List<AdvertResponse> readAllInreview(long userId) {
 
+        String message;
+
         List<AdvertResponse> advertResponseList = readAll(userId);
+
+        if (advertResponseList==null) {
+            message = "Reading unsuccessful";
+            log.warn(message);
+            return null;
+        }
 
         List<AdvertResponse> advertResponseInreviewList = new ArrayList<>();
 
@@ -233,6 +297,8 @@ public class AdvertService extends AdvertBaseService {
             }
         }
 
+        message = "Reading successful";
+        log.info(message);
         return advertResponseInreviewList;
     }
 }
