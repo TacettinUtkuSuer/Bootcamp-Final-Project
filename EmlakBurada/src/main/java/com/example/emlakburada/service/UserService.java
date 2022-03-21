@@ -1,10 +1,13 @@
 package com.example.emlakburada.service;
 
 import com.example.emlakburada.dto.response.ProcessStatusResponse;
+import com.example.emlakburada.exception.EmlakBuradaException;
+import com.example.emlakburada.exception.UserNotFoundException;
 import com.example.emlakburada.model.models.PaymentMessage;
 import com.example.emlakburada.model.models.User;
 import com.example.emlakburada.repository.InfoRepository;
 import com.example.emlakburada.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +28,13 @@ public class UserService {
     InfoRepository infoRepository;
 
 
-    public ProcessStatusResponse pay(long userId){
+    public ProcessStatusResponse pay(long userId) throws EmlakBuradaException{
 
         User user = userRepository.getById(userId);
+
+        if(user == null){
+            throw new UserNotFoundException("User not found.");
+        }
 
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:9092/payandsavepayment";
@@ -36,7 +43,9 @@ public class UserService {
         ResponseEntity<Boolean> responseEntity = restTemplate.postForEntity(url,paymentMessage,Boolean.class);
 
         String message;
+
         if (responseEntity.getBody()){
+
             LocalDate localDate = user.getAdvertProductPackage().getPackageExpirationDate();
 
             if(localDate.isAfter(LocalDate.now())){
@@ -51,8 +60,8 @@ public class UserService {
             return new ProcessStatusResponse(true, message);
         } else {
             message = "There was a problem with the payment.";
-            log.warn(message);
-            return new ProcessStatusResponse(false,message);
+            log.error(message);
+            throw new EmlakBuradaException(message);
         }
     }
 }

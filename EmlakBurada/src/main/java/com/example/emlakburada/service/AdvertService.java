@@ -4,6 +4,8 @@ import com.example.emlakburada.dto.request.AdvertRabbitMQRequest;
 import com.example.emlakburada.dto.request.AdvertRequest;
 import com.example.emlakburada.dto.response.AdvertResponse;
 import com.example.emlakburada.dto.response.ProcessStatusResponse;
+import com.example.emlakburada.exception.AdvertNotFoundException;
+import com.example.emlakburada.exception.EmlakBuradaException;
 import com.example.emlakburada.model.enums.AdvertStatus;
 import com.example.emlakburada.model.models.Advert;
 import com.example.emlakburada.model.models.User;
@@ -39,13 +41,13 @@ public class AdvertService extends AdvertBaseService {
         User user = userRepository.getById(userId);
         if(user.getAdvertProductPackage().getPackageExpirationDate().isBefore(LocalDate.now())){
             message = "Your advert package has expired. Please buy new package.";
-            log.warn(message);
+            log.error(message);
             return new ProcessStatusResponse(false,message);
         }
         List<Advert> advertList = user.getAdvertProductPackage().getAdverts();
         if(advertList.size()>10){
             message = "You can create a maximum of 10 ads. therefore the record could not be created.";
-            log.warn(message);
+            log.error(message);
             return new ProcessStatusResponse(false, message);
         }
         Advert advert = new Advert();
@@ -71,8 +73,8 @@ public class AdvertService extends AdvertBaseService {
 
         if(advertList==null){
             message = "Reading unsuccessful";
-            log.warn(message);
-            return null;
+            log.error(message);
+            throw new AdvertNotFoundException(message);
         }
 
         List<AdvertResponse> advertResponseList = convertFromAdvertListToAdvertResponseList(advertList);
@@ -94,8 +96,8 @@ public class AdvertService extends AdvertBaseService {
             return convertFromAdvertToAdvertResponse(advert);
         }
         message = "Reading unsuccessful";
-        log.warn(message);
-        return null;
+        log.error(message);
+        throw new AdvertNotFoundException(message);
     }
 
 
@@ -105,7 +107,7 @@ public class AdvertService extends AdvertBaseService {
 
         if(userRepository.getById(userId).getAdvertProductPackage().getPackageExpirationDate().isBefore(LocalDate.now())){
             message = "The product package has expired.";
-            log.warn(message);
+            log.error(message);
             return null;
         }
 
@@ -135,8 +137,8 @@ public class AdvertService extends AdvertBaseService {
         }
 
         message = "Advert could not be updated.";
-        log.warn("message");
-        return null;
+        log.error("message");
+        throw new AdvertNotFoundException(message);
     }
 
     public ProcessStatusResponse deleteById(long userId, long advertId) {
@@ -162,8 +164,8 @@ public class AdvertService extends AdvertBaseService {
         }
 
         message="Advert could not be deleted.";
-        log.warn(message);
-        return new ProcessStatusResponse(false,message);
+        log.error(message);
+        throw new AdvertNotFoundException(message);
 
     }
 
@@ -192,8 +194,8 @@ public class AdvertService extends AdvertBaseService {
             return convertFromAdvertToAdvertResponse(advert);
         }
         message = "Advert could not been activated.";
-        log.warn(message);
-        return null;
+        log.error(message);
+        throw new EmlakBuradaException(message);
     }
 
     public AdvertResponse deactivate(long userId, long advertId) {
@@ -222,8 +224,8 @@ public class AdvertService extends AdvertBaseService {
         }
 
         message = "Advert could not been deactivated.";
-        log.warn(message);
-        return null;
+        log.error(message);
+        throw new EmlakBuradaException(message);
     }
 
 
@@ -235,8 +237,8 @@ public class AdvertService extends AdvertBaseService {
 
         if (advertResponseList==null) {
             message = "Reading unsuccessful";
-            log.warn(message);
-            return null;
+            log.error(message);
+            throw new AdvertNotFoundException(message);
         }
 
         List<AdvertResponse> advertResponseActiveList = new ArrayList<>();
@@ -260,8 +262,8 @@ public class AdvertService extends AdvertBaseService {
 
         if (advertResponseList==null) {
             message = "Reading unsuccessful";
-            log.warn(message);
-            return null;
+            log.error(message);
+            throw new AdvertNotFoundException(message);
         }
 
         List<AdvertResponse> advertResponsePassiveList = new ArrayList<>();
@@ -285,8 +287,8 @@ public class AdvertService extends AdvertBaseService {
 
         if (advertResponseList==null) {
             message = "Reading unsuccessful";
-            log.warn(message);
-            return null;
+            log.error(message);
+            throw new AdvertNotFoundException(message);
         }
 
         List<AdvertResponse> advertResponseInreviewList = new ArrayList<>();
