@@ -3,6 +3,7 @@ package com.example.emlakburada.service;
 import com.example.emlakburada.dto.request.AdvertRabbitMQRequest;
 import com.example.emlakburada.dto.request.AdvertRequest;
 import com.example.emlakburada.dto.response.AdvertResponse;
+import com.example.emlakburada.dto.response.ProcessStatusResponse;
 import com.example.emlakburada.model.enums.AdvertStatus;
 import com.example.emlakburada.model.models.Advert;
 import com.example.emlakburada.model.models.User;
@@ -10,6 +11,7 @@ import com.example.emlakburada.queue.RabbitMqService;
 import com.example.emlakburada.repository.AdvertRepository;
 import com.example.emlakburada.repository.UserRepository;
 import com.example.emlakburada.service.baseServices.AdvertBaseService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class AdvertService extends AdvertBaseService {
 
@@ -29,14 +32,21 @@ public class AdvertService extends AdvertBaseService {
     @Autowired
     RabbitMqService rabbitMqService;
 
-    public String create(long userId, AdvertRequest advertRequest) {
+    public ProcessStatusResponse create(long userId, AdvertRequest advertRequest) {
+
+        String message;
+
         User user = userRepository.getById(userId);
         if(user.getAdvertProductPackage().getPackageExpirationDate().isBefore(LocalDate.now())){
-            return new String("Your advert package has expired. Please buy new package.");
+            message = "Your advert package has expired. Please buy new package.";
+            log.warn(message);
+            return new ProcessStatusResponse(false,message);
         }
         List<Advert> advertList = user.getAdvertProductPackage().getAdverts();
         if(advertList.size()>10){
-            return new String("You can create a maximum of 10 ads. therefore the record could not be created.");
+            message = "You can create a maximum of 10 ads. therefore the record could not be created.";
+            log.warn(message);
+            return new ProcessStatusResponse(false, message);
         }
         Advert advert = new Advert();
         advert = convertFromAdvertRequestToAdvert(userId, advertRequest);
@@ -47,7 +57,9 @@ public class AdvertService extends AdvertBaseService {
         AdvertRabbitMQRequest advertRabbitMQRequest = new AdvertRabbitMQRequest(user.getAdvertProductPackage().getAdverts().get(advertList.size()-1).getId());
         rabbitMqService.sendMessageAndAdvertActivate(advertRabbitMQRequest);
 
-        return new String("Advert has been created.");
+        message = "Advert has been created.";
+        log.info(message);
+        return new ProcessStatusResponse(true,message);
     }
 
 
@@ -102,10 +114,11 @@ public class AdvertService extends AdvertBaseService {
         return null;
     }
 
-    public String deleteById(long userId, long advertId) {
+    public ProcessStatusResponse deleteById(long userId, long advertId) {
 
         long userIdFromAdvertId = advertRepository.getById(advertId).getAdvertProductPackage().getUser().getId();
 
+        String message;
         if(userIdFromAdvertId == userId){
 
             List<Advert> advertList = userRepository.getById(userId).getAdvertProductPackage().getAdverts();
@@ -118,10 +131,14 @@ public class AdvertService extends AdvertBaseService {
 
             userRepository.save(user);
 
-            return new String("The ad has been deleted.");
+            message="The ad has been deleted.";
+            log.info(message);
+            return new ProcessStatusResponse(true,message);
         }
 
-        return new String("Advert could not be deleted.");
+        message="Advert could not be deleted.";
+        log.warn(message);
+        return new ProcessStatusResponse(false,message);
 
     }
 

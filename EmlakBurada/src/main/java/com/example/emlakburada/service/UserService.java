@@ -1,6 +1,6 @@
 package com.example.emlakburada.service;
 
-import com.example.emlakburada.model.models.CreditCard;
+import com.example.emlakburada.dto.response.ProcessStatusResponse;
 import com.example.emlakburada.model.models.PaymentMessage;
 import com.example.emlakburada.model.models.User;
 import com.example.emlakburada.repository.InfoRepository;
@@ -25,7 +25,7 @@ public class UserService {
     InfoRepository infoRepository;
 
 
-    public String pay(long userId){
+    public ProcessStatusResponse pay(long userId){
 
         User user = userRepository.getById(userId);
 
@@ -48,10 +48,11 @@ public class UserService {
             userRepository.save(user);
             message = "The payment is successful.";
             log.info(message);
+            return new ProcessStatusResponse(true, message);
         } else {
             message = "There was a problem with the payment.";
             log.warn(message);
+            return new ProcessStatusResponse(false,message);
         }
-        return message;
     }
 }

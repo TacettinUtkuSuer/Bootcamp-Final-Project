@@ -3,6 +3,7 @@ package com.example.emlakburada.controller;
 import com.example.emlakburada.dto.request.AdvertRabbitMQRequest;
 import com.example.emlakburada.dto.request.AdvertRequest;
 import com.example.emlakburada.dto.response.AdvertResponse;
+import com.example.emlakburada.dto.response.ProcessStatusResponse;
 import com.example.emlakburada.queue.RabbitMqService;
 import com.example.emlakburada.service.AdvertService;
 import com.example.emlakburada.service.TokenService;
@@ -29,11 +30,10 @@ public class AdvertController {
 
 
     @PostMapping(value = "/adverts/create")
-    public ResponseEntity<String> create(@RequestBody AdvertRequest advertRequest, @RequestHeader(value="Authorization") String token){
+    public ResponseEntity<ProcessStatusResponse> create(@RequestBody AdvertRequest advertRequest, @RequestHeader(value="Authorization") String token){
         long userId = tokenService.getUserIdByToken(token);
-        String message = advertService.create(userId, advertRequest);
-        log.info(message);
-        return new ResponseEntity<>(message, HttpStatus.CREATED);
+        ProcessStatusResponse processStatusResponse = advertService.create(userId, advertRequest);
+        return new ResponseEntity<>(processStatusResponse, HttpStatus.CREATED);
     }
 
 
@@ -54,10 +54,10 @@ public class AdvertController {
 
 
     @PostMapping(value = "/adverts/delete/{advertId}")
-    public ResponseEntity<String> delete(@PathVariable(required = false) long advertId, @RequestHeader(value="Authorization") String token){
+    public ResponseEntity<ProcessStatusResponse> delete(@PathVariable(required = false) long advertId, @RequestHeader(value="Authorization") String token){
         long userId = tokenService.getUserIdByToken(token);
-        String message = advertService.deleteById(userId, advertId);
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        ProcessStatusResponse processStatusResponse = advertService.deleteById(userId, advertId);
+        return new ResponseEntity<>(processStatusResponse, HttpStatus.OK);
     }
 
     //------------------------------------------------------------------------------------------------------------------
