@@ -20,16 +20,6 @@ spring:
           uri: http://localhost:9091
           predicates:
             - Path=/pay/**, /adverts/**, /prepare/**
-        - id: emlakburada-payment
-          uri: http://localhost:9092
-          predicates:
-            - Path=/banners/**
-            - Method=POST,GET
-        - id: emlakburada-advertactivation
-          uri: http://localhost:9093
-          predicates:
-            - Path=/adverts/**
-            - Method=POST
         - id: emlakburada-auth
           uri: http://localhost:9094
           predicates:
@@ -45,3 +35,5 @@ spring:
 logging:
   level:
     '[org.springframework.security]': TRACE
+
+#-----------------------------------------------------------------------------------------------------------------------

@@ -9,12 +9,14 @@ import com.example.emlakburada.exception.EmlakBuradaException;
 import com.example.emlakburada.model.enums.AdvertStatus;
 import com.example.emlakburada.model.models.Advert;
 import com.example.emlakburada.model.models.User;
+import com.example.emlakburada.queue.QueueService;
 import com.example.emlakburada.queue.RabbitMqService;
 import com.example.emlakburada.repository.AdvertRepository;
 import com.example.emlakburada.repository.UserRepository;
 import com.example.emlakburada.service.baseServices.AdvertBaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -32,7 +34,7 @@ public class AdvertService extends AdvertBaseService {
     AdvertRepository advertRepository;
 
     @Autowired
-    RabbitMqService rabbitMqService;
+    QueueService rabbitMqService;
 
     public ProcessStatusResponse create(long userId, AdvertRequest advertRequest) {
 
@@ -229,7 +231,7 @@ public class AdvertService extends AdvertBaseService {
     }
 
 
-    public List<AdvertResponse> readAllActive(long userId) {
+    public List<AdvertResponse> readAllByStatus(long userId, AdvertStatus advertStatus) {
 
         String message;
 
@@ -244,7 +246,7 @@ public class AdvertService extends AdvertBaseService {
         List<AdvertResponse> advertResponseActiveList = new ArrayList<>();
 
         for (AdvertResponse advertResponse:advertResponseList) {
-            if(advertResponse.getAdvertStatus() == AdvertStatus.ACTIVE){
+            if(advertResponse.getAdvertStatus() == advertStatus){
                 advertResponseActiveList.add(advertResponse);
             }
         }
@@ -254,53 +256,4 @@ public class AdvertService extends AdvertBaseService {
         return advertResponseActiveList;
     }
 
-    public List<AdvertResponse> readAllPassive(long userId) {
-
-        String message;
-
-        List<AdvertResponse> advertResponseList = readAll(userId);
-
-        if (advertResponseList==null) {
-            message = "Reading unsuccessful";
-            log.error(message);
-            throw new AdvertNotFoundException(message);
-        }
-
-        List<AdvertResponse> advertResponsePassiveList = new ArrayList<>();
-
-        for (AdvertResponse advertResponse:advertResponseList) {
-            if(advertResponse.getAdvertStatus() == AdvertStatus.PASSIVE){
-                advertResponsePassiveList.add(advertResponse);
-            }
-        }
-
-        message = "Reading successful";
-        log.info(message);
-        return advertResponsePassiveList;
-    }
-
-    public List<AdvertResponse> readAllInreview(long userId) {
-
-        String message;
-
-        List<AdvertResponse> advertResponseList = readAll(userId);
-
-        if (advertResponseList==null) {
-            message = "Reading unsuccessful";
-            log.error(message);
-            throw new AdvertNotFoundException(message);
-        }
-
-        List<AdvertResponse> advertResponseInreviewList = new ArrayList<>();
-
-        for (AdvertResponse advertResponse:advertResponseList) {
-            if(advertResponse.getAdvertStatus() == AdvertStatus.IN_REVIEW){
-                advertResponseInreviewList.add(advertResponse);
-            }
-        }
-
-        message = "Reading successful";
-        log.info(message);
-        return advertResponseInreviewList;
-    }
 }

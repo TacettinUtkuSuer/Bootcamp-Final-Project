@@ -1,6 +1,5 @@
 package com.example.emlakburada;
 
-import com.example.emlakburada.service.PrepareDatabaseService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
