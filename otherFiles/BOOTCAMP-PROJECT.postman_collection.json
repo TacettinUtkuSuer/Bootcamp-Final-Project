@@ -1,0 +1,349 @@
+{
+	"info": {
+		"_postman_id": "f24ae3d1-d145-4764-b855-b57c1f256121",
+		"name": "BOOTCAMP-PROJECT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "EMLAKBURADA - POST PREPARE DATABASE",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:9091/prepare",
+					"host": [
+						"localhost"
+					],
+					"port": "9091",
+					"path": [
+						"prepare"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GATEWAY - POST AUTH CREATE JWT Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"tacettinutkusuer@gmail.com\",\r\n    \"password\":\"1993\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/auth",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GATEWAY - POST CREATE ADVERT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRhY2V0dGludXRrdXN1ZXJAZ21haWwuY29tIiwiaWF0IjoxNjQ3OTgwMTEyLCJzdWIiOiJ0YWNldHRpbnV0a3VzdWVyQGdtYWlsLmNvbSIsImlzcyI6ImVtbGFrYnVyYWRhLmNvbSIsImV4cCI6MTY0ODI4MDExMn0.1IYxcr101xQdMCUEsSg2LpqBfSOUsmjcPKaUlHbMSJQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"advertType\":\"FORSALE\",\r\n\"title\":\"ÇOK acil satılık......!!!!\",\r\n\"definition\":\"5+1 Çok temiz\",\r\n\"address\":{\r\n    \"country\":\"ANKARA\",\r\n    \"district\":\"Etimesgut\",\r\n    \"fullAddress\":\"Sokak - cadde\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/adverts",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"adverts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GATEWAY - GET READ ADVERT byId",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRhY2V0dGludXRrdXN1ZXJAZ21haWwuY29tIiwiaWF0IjoxNjQ3NzE1NzQ0LCJzdWIiOiJ0YWNldHRpbnV0a3VzdWVyQGdtYWlsLmNvbSIsImlzcyI6ImVtbGFrYnVyYWRhLmNvbSIsImV4cCI6MTY0ODAxNTc0NH0.hvfAK0kxApBznWEMGYy-19eSNmYXMMpDY9FOVW51zSA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9090/adverts/10",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"adverts",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GATEWAY - PUT UPDATE ADVERT",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRhY2V0dGludXRrdXN1ZXJAZ21haWwuY29tIiwiaWF0IjoxNjQ3NzkxODg4LCJzdWIiOiJ0YWNldHRpbnV0a3VzdWVyQGdtYWlsLmNvbSIsImlzcyI6ImVtbGFrYnVyYWRhLmNvbSIsImV4cCI6MTY0ODA5MTg4OH0.oE3tqGRlFB1WjwJ6WhBYkDYCEqmOz67atrdrKlVO_LM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"advertType\":\"FORSALE\",\r\n\"title\":\"ÇOK acil satılık......!!!!\",\r\n\"definition\":\"5+1 Çok temiz\",\r\n\"address\":{\r\n    \"country\":\"ANKARA\",\r\n    \"district\":\"Etimesgut\",\r\n    \"fullAddress\":\"Sokak - cadde\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/adverts/10",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"adverts",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GATEWAY - DEL DELETE ADVERT byId",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRhY2V0dGludXRrdXN1ZXJAZ21haWwuY29tIiwiaWF0IjoxNjQ3NzE5MzUxLCJzdWIiOiJ0YWNldHRpbnV0a3VzdWVyQGdtYWlsLmNvbSIsImlzcyI6ImVtbGFrYnVyYWRhLmNvbSIsImV4cCI6MTY0ODAxOTM1MX0.a9o-rcop-mxJ__mQpE0UgQYqkmHUTaUc2Wu_mRCssx0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9090/adverts/8",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"adverts",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GATEWAY - POST ACTİVATE byId",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRhY2V0dGludXRrdXN1ZXJAZ21haWwuY29tIiwiaWF0IjoxNjQ3NzIxNDY1LCJzdWIiOiJ0YWNldHRpbnV0a3VzdWVyQGdtYWlsLmNvbSIsImlzcyI6ImVtbGFrYnVyYWRhLmNvbSIsImV4cCI6MTY0ODAyMTQ2NX0.DvOWqEwcmw61mbYW2JCsIKZMt5LoIC5h_PHODceMbQ0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9090/adverts/10/active",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"adverts",
+						"10",
+						"active"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GATEWAY - POST DEACTİVATE byId",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRhY2V0dGludXRrdXN1ZXJAZ21haWwuY29tIiwiaWF0IjoxNjQ3NzE5MzUxLCJzdWIiOiJ0YWNldHRpbnV0a3VzdWVyQGdtYWlsLmNvbSIsImlzcyI6ImVtbGFrYnVyYWRhLmNvbSIsImV4cCI6MTY0ODAxOTM1MX0.a9o-rcop-mxJ__mQpE0UgQYqkmHUTaUc2Wu_mRCssx0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9090/adverts/10/passive",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"adverts",
+						"10",
+						"passive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GATEWAY - GET READ ADVERT ACTIVE",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRhY2V0dGludXRrdXN1ZXJAZ21haWwuY29tIiwiaWF0IjoxNjQ3NzEyNTEwLCJzdWIiOiJ0YWNldHRpbnV0a3VzdWVyQGdtYWlsLmNvbSIsImlzcyI6ImVtbGFrYnVyYWRhLmNvbSIsImV4cCI6MTY0ODAxMjUxMH0.0legF6EGX8QAlNXankDFT2hFrokQPJ4iD0hBRFTaaq8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9090/adverts/read/active",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"adverts",
+						"read",
+						"active"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GATEWAY - GET READ ADVERT PASSIVE",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRhY2V0dGludXRrdXN1ZXJAZ21haWwuY29tIiwiaWF0IjoxNjQ3NzEyNTEwLCJzdWIiOiJ0YWNldHRpbnV0a3VzdWVyQGdtYWlsLmNvbSIsImlzcyI6ImVtbGFrYnVyYWRhLmNvbSIsImV4cCI6MTY0ODAxMjUxMH0.0legF6EGX8QAlNXankDFT2hFrokQPJ4iD0hBRFTaaq8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9090/adverts/read/passive",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"adverts",
+						"read",
+						"passive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GATEWAY - GET READ ADVERT IN_REVIEW",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRhY2V0dGludXRrdXN1ZXJAZ21haWwuY29tIiwiaWF0IjoxNjQ3NzEyNTEwLCJzdWIiOiJ0YWNldHRpbnV0a3VzdWVyQGdtYWlsLmNvbSIsImlzcyI6ImVtbGFrYnVyYWRhLmNvbSIsImV4cCI6MTY0ODAxMjUxMH0.0legF6EGX8QAlNXankDFT2hFrokQPJ4iD0hBRFTaaq8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9090/adverts/read/inreview",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"adverts",
+						"read",
+						"inreview"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GATEWAY - GET READ ADVERT ALL",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRhY2V0dGludXRrdXN1ZXJAZ21haWwuY29tIiwiaWF0IjoxNjQ3NzEyNTEwLCJzdWIiOiJ0YWNldHRpbnV0a3VzdWVyQGdtYWlsLmNvbSIsImlzcyI6ImVtbGFrYnVyYWRhLmNvbSIsImV4cCI6MTY0ODAxMjUxMH0.0legF6EGX8QAlNXankDFT2hFrokQPJ4iD0hBRFTaaq8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9090/adverts",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"adverts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GATEWAY - POST PAY",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImJlcm5hZXJrZXJAZ21haWwuY29tIiwiaWF0IjoxNjQ3ODE3MjczLCJzdWIiOiJiZXJuYWVya2VyQGdtYWlsLmNvbSIsImlzcyI6ImVtbGFrYnVyYWRhLmNvbSIsImV4cCI6MTY0ODExNzI3M30.fCKAQ3Xr5I_FLP415vljLkBYDv4rID9n2akbUXGrJ7w",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9090/pay",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"pay"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
