@@ -54,7 +54,7 @@ End points can be accessed via Gateway with the token information. The end point
 
 
 
-![HepsiEmlak-Swagger](otherFiles\figures\HepsiEmlak-Swagger.PNG)
+![HepsiEmlak-Swagger](otherFiles/figures/HepsiEmlak-Swagger.PNG)
 
 
 
