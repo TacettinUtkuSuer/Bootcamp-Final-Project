@@ -31,12 +31,11 @@ public class SwaggerConfig {
 	private ApiInfo metaInfo() {
 
 		ApiInfo apiInfo = new ApiInfo(
-				"Spring Boot Swagger Example API",
-				"Spring Boot Swagger Example API for Youtube",
+				"Spring Boot Swagger",
+				"Patika.dev & HepsiEmlak Spring Boot Project",
 				"1.0",
 				"Terms of Service",
-				new Contact("TechPrimers", "https://www.youtube.com/TechPrimers",
-						"techprimerschannel@gmail.com"),
+				new Contact("-", "-",	"-"),
 				"Apache License Version 2.0",
 				"https://www.apache.org/licesen.html"
 		);
