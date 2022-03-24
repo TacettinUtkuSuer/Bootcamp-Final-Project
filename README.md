@@ -66,6 +66,26 @@ The status of newly created advert is IN_REVIEW. In order to switch from this st
 
 
 
+### Test
+
+Unit test coverages are shown below.
+
+
+
+EmlakBurada:
+
+![EmlakBurada-Test](otherFiles/figures/EmlakBurada-Test.PNG)
+
+EmlakBurada-Auth:
+
+![EmlakBurada-Auth-Test](otherFiles/figures/EmlakBurada-Auth-Test.PNG)
+
+EmlakBurada-PaymentService:
+
+![EmlakBurada-PaymentService-Test](otherFiles/figures/EmlakBurada-PaymentService-Test.PNG)
+
+
+
 ### Considerations During the Writing of the Project
 
 - During the project writing, git has been used and an explanatory commit was made at the necessary points.
@@ -73,7 +93,7 @@ The status of newly created advert is IN_REVIEW. In order to switch from this st
 - It has been tried to be written in accordance with the code structure. It was created taking into account the layered architecture (controller-service-repository). 
 - This project has been tried to be done in accordance with the microservice architecture.
 - Logging and Exception Handling have been tried to be used.
-- Programming principles (SOLID) were tried to be taken into account.
+- Programming principles (SOLID etc.) were tried to be taken into account.
 
 
 
@@ -86,6 +106,8 @@ The status of newly created advert is IN_REVIEW. In order to switch from this st
 - Instead of using a common database, each service can be connecting to its own database to be more secure (especially for credit card information).
 - Methods for filtering advertisements by automatically catching inappropriate things such as profanity can be added to EmlakHere - AdvertActivation service.
 - User interactions can also be included by combining it with the EmlakBurada project, which was previously written within the scope of the Bootcamp.
+- Design patterns can be used.
+- The unit test should be developed by writing new tests for all services and all cases of these services' methods.
 
 
 
