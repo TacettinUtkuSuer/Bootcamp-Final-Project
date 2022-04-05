@@ -104,7 +104,7 @@ EmlakBurada-PaymentService:
 - Access to other services (except Gateway) can be restricted for more security.
 - Service layer can be improved to avoid code duplication.
 - Instead of using a common database, each service can be connecting to its own database to be more secure (especially for credit card information).
-- Methods for filtering advertisements by automatically catching inappropriate things such as profanity can be added to EmlakHere - AdvertActivation service.
+- Methods for filtering advertisements by automatically catching inappropriate things such as profanity can be added to EmlakBurada - AdvertActivation service.
 - User interactions can also be included by combining it with the EmlakBurada project, which was previously written within the scope of the Bootcamp.
 - Design patterns can be used.
 - The unit test should be developed by writing new tests for all services and all cases of these services' methods.
